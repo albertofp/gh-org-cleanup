@@ -1,0 +1,14 @@
+version: '3'
+
+vars:
+  SLACK_TOKEN:
+  GITHUB_ORG:
+
+tasks:
+  default:
+    cmds:
+      - go run main.go
+    silent: true
+    env:
+      SLACK_TOKEN: '{{.SLACK_TOKEN}}'
+      GITHUB_ORG: '{{.GITHUB_ORG}}'
