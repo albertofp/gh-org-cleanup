@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	log "github.com/sirupsen/logrus"
 
@@ -28,7 +29,7 @@ func main() {
 
 	slackSet := make(map[string]struct{})
 	for _, su := range slackUsers {
-		ghHandle := su.GithubHandle
+		ghHandle := strings.ToLower(su.GithubHandle)
 		if ghHandle != "" {
 			slackSet[ghHandle] = struct{}{}
 		}
@@ -36,11 +37,11 @@ func main() {
 
 	usersNotInSlack := make([]string, 0)
 	for _, ghUser := range ghUsers {
-		if _, found := slackSet[ghUser]; !found {
+		if _, found := slackSet[strings.ToLower(ghUser)]; !found {
 			usersNotInSlack = append(usersNotInSlack, ghUser)
 			fmt.Println(ghUser)
 		}
 	}
 
-	log.Info(len(usersNotInSlack), "users not in slack")
+	log.Info(len(usersNotInSlack), " users not in slack")
 }
